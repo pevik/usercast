@@ -27,6 +27,7 @@ LIBS := $(shell pkg-config --libs pidgin)
 TARGET := usercast.so
 PREFIX := /usr/local
 LIBDIR := $(PREFIX)/lib
+USER_PLUGINS := $(HOME)/.purple/plugins
 
 SOURCES := $(wildcard *.c)
 OBJECTS := $(patsubst %.c, %.o, $(SOURCES))
@@ -39,6 +40,10 @@ $(TARGET): $(OBJECTS)
 install: $(TARGET)
 	mkdir -p $(DESTDIR)/$(LIBDIR)/pidgin
 	cp $^ $(DESTDIR)/$(LIBDIR)/pidgin
+
+user-install: $(TARGET)
+	mkdir -p $(USER_PLUGINS)
+	cp $< $(USER_PLUGINS)
 
 clean:
 	rm -f $(OBJECTS) $(TARGET)
